@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ustoz-shogird Tizimi - Reyting va Portfolio Platformasi</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="user-section" id="user-section">
+                    <button class="auth-btn" id="login-btn" onclick="openModal('login')">Kirish</button>
+                    <button class="auth-btn" id="register-btn" onclick="openModal('register')">Ro'yxatdan o'tish</button>
+                    <div class="user-info" id="user-info" style="display: none;">
+                        <span id="username-display"></span>
+                        <button class="auth-btn" onclick="showUserResults()">📊 Natijalar</button>
+                        <button class="auth-btn" onclick="logout()">Chiqish</button>
+                    </div>
+                </div>
+            </div>
+            <h1>👨‍🏫 Ustoz-shogird tizimi</h1>
+            <p class="subtitle">Ustozlar reytingi va shogird bo'lish tizimi</p>
+
+            <div class="home-actions">
+                <button class="home-action-btn" onclick="showRatings()">🏆 Ustozlar reytingi</button>
+                <button class="home-action-btn" onclick="showFilesDatabase()">📚 Fayllar bazasi</button>
+                <button class="home-action-btn" onclick="showMyPage()">👤 Mening sahifam</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Home -->
+        <section class="welcome-section" id="home-section">
+            <h2>Xush kelibsiz!</h2>
+            <p>Ustozlar reytingini ko'ring yoki o'zingizning sahifangizni to'ldiring.</p>
+        </section>
+
+        <!-- Ratings -->
+        <section class="ratings-section" id="ratings-section" style="display: none;">
+            <div class="portfolio-header">
+                <button class="back-button" onclick="showHome()">⬅ Orqaga</button>
+                <h2>🏆 Ustozlar reytingi</h2>
+            </div>
+
+            <div class="display-card">
+                <h3>🏆 Umumiy reyting</h3>
+                <div id="ratings-overall" class="ratings-list"></div>
+            </div>
+
+            <div class="display-card">
+                <h3>📚 Fanlar bo'yicha reyting</h3>
+                <div id="ratings-by-subject" class="ratings-subjects"></div>
+            </div>
+        </section>
+
+        <!-- Files Database -->
+        <section class="files-database-section" id="files-database-section" style="display: none;">
+            <div class="portfolio-header">
+                <button class="back-button" onclick="showHome()">⬅ Orqaga</button>
+                <h2>📚 Fayllar bazasi</h2>
+            </div>
+
+            <div class="display-card">
+                <h3>🎭 Ko'rgazmalar</h3>
+                <div id="showcase-files-list" class="files-grid"></div>
+            </div>
+
+            <div class="display-card">
+                <h3>📜 Me'yoriy hujjatlar</h3>
+                <div id="regulatory-files-list" class="files-grid"></div>
+            </div>
+        </section>
+
+        <!-- My Page -->
+        <section class="mentor-student-section" id="my-page-section" style="display: none;">
+            <div class="welcome-section">
+                <h2>👤 Mening sahifam</h2>
+                <p>Birinchi marta fan tanlab, ma'lumotlarni kiriting. Keyinroq tahrirlashingiz mumkin.</p>
+            </div>
+
+            <!-- Fan tanlash -->
+            <div class="mentor-subjects-section" id="mentor-subjects-section">
+                <h2>O'zingizning fanlaringizni tanlang:</h2>
+                <div id="mentor-subjects-grid" class="subjects-grid">
+                    <!-- Fanlar bu yerga qo'shiladi -->
+                </div>
+            </div>
+
+            <!-- Portfolio sahifasi -->
+            <div class="portfolio-section" id="portfolio-section" style="display: none;">
+                <div class="portfolio-header">
+                    <button class="back-button" onclick="goBackToMyPage()">⬅ Orqaga</button>
+                    <h2 id="portfolio-title">Mening Portfoliom</h2>
+                </div>
+
+                <div class="portfolio-content">
+                    <!-- Shaxsiy ma'lumotlar -->
+                    <div class="portfolio-card">
+                        <h3>📋 Shaxsiy ma'lumotlar</h3>
+                        <form id="personal-info-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>To'liq ism:</label>
+                                    <input type="text" id="portfolio-fullname" placeholder="Ismingizni kiriting">
+                                </div>
+                                <div class="form-group">
+                                    <label>Mutaxassislik:</label>
+                                    <input type="text" id="portfolio-speciality" placeholder="Masalan: Matematika o'qituvchisi">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Ish joyi:</label>
+                                    <input type="text" id="portfolio-workplace" placeholder="Maktab yoki muassasa nomi">
+                                </div>
+                                <div class="form-group">
+                                    <label>Ish tajribasi:</label>
+                                    <input type="text" id="portfolio-experience" placeholder="Masalan: 5 yil">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Qisqacha ma'lumot:</label>
+                                <textarea id="portfolio-bio" placeholder="O'zingiz haqingizda qisqacha ma'lumot..."></textarea>
+                            </div>
+                            <button type="button" onclick="savePersonalInfo()" class="form-btn">Saqlash</button>
+                        </form>
+                    </div>
+
+                    <!-- Yutuqlar -->
+                    <div class="portfolio-card">
+                        <h3>🏆 Yutuqlar va sertifikatlar</h3>
+                        <div class="achievements-list" id="achievements-list">
+                            <!-- Yutuqlar ro'yxati -->
+                        </div>
+                        <div class="add-achievement">
+                            <input type="text" id="new-achievement" placeholder="Yangi yutuq qo'shish...">
+                            <button onclick="addAchievement()" class="add-btn">➕ Qo'shish</button>
+                        </div>
+                    </div>
+
+                    <!-- Fayl yuklash -->
+                    <div class="portfolio-card">
+                        <h3>📄 Hujjatlar</h3>
+                        <div class="file-upload-area">
+                            <input type="file" id="pdf-upload" accept=".pdf,.doc,.docx,.jpg,.png" multiple style="display: none;">
+                            <button onclick="document.getElementById('pdf-upload').click()" class="upload-btn">
+                                📁 Fayl yuklash
+                            </button>
+                            <p>PDF, Word, rasm fayllarini yuklashingiz mumkin</p>
+                        </div>
+                        <div class="uploaded-files" id="uploaded-files">
+                            <!-- Yuklangan fayllar ro'yxati -->
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <!-- Portfolio ko'rish sahifasi -->
+            <div class="portfolio-view-section" id="portfolio-view-section" style="display: none;">
+                <div class="portfolio-header">
+                    <button class="back-button" onclick="goBackToPortfolioEdit()">⬅ Orqaga</button>
+                    <h2 id="portfolio-view-title">Portfolio Ko'rinishi</h2>
+                    <div class="header-actions">
+                        <button class="action-btn" onclick="openCreateFileModal()">📁 Fayllar yaratish</button>
+                        <button class="action-btn" onclick="openArticleModal()">📝 Maqola yozish</button>
+                        <button class="action-btn" onclick="openPostModal()">📋 Post yozish</button>
+                        <button class="student-btn" id="become-student-btn" onclick="becomeStudent()" style="display: none;">
+                            🎓 Shogird bo'lish
+                        </button>
+                        <button class="edit-button" onclick="editPortfolio()">✏️ O'zgartirish</button>
+                    </div>
+                </div>
+
+                <div class="portfolio-display">
+                    <!-- Shaxsiy ma'lumotlar ko'rinishi -->
+                    <div class="display-card">
+                        <h3>📋 Shaxsiy ma'lumotlar</h3>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <label>To'liq ism:</label>
+                                <span id="display-fullname">-</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Mutaxassislik:</label>
+                                <span id="display-speciality">-</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Ish joyi:</label>
+                                <span id="display-workplace">-</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Ish tajribasi:</label>
+                                <span id="display-experience">-</span>
+                            </div>
+                            <div class="info-item full-width">
+                                <label>Qisqacha ma'lumot:</label>
+                                <div class="bio-display" id="display-bio">-</div>
+                            </div>
+                            <div class="info-item full-width">
+                                <label>Tanlangan fanlar:</label>
+                                <div class="subjects-display" id="display-subjects">-</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Yutuqlar ko'rinishi -->
+                    <div class="display-card">
+                        <h3>🏆 Yutuqlar va sertifikatlar</h3>
+                        <div class="achievements-display" id="display-achievements">
+                            <p class="no-data">Yutuqlar kiritilmagan</p>
+                        </div>
+                    </div>
+
+                    <!-- Fayllar ko'rinishi -->
+                    <div class="display-card">
+                        <h3>📄 Yuklangan hujjatlar</h3>
+                        <div class="files-display" id="display-files">
+                            <p class="no-data">Hujjatlar yuklanmagan</p>
+                        </div>
+                    </div>
+
+                    <!-- Sana ma'lumoti -->
+                    <div class="display-card">
+                        <h3>📅 Portfolio ma'lumotlari</h3>
+                        <div class="meta-info">
+                            <p><strong>Yaratilgan:</strong> <span id="display-created-date">-</span></p>
+                            <p><strong>Oxirgi yangilash:</strong> <span id="display-updated-date">-</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Maqolalar -->
+                    <div class="display-card" id="articles-display-card" style="display: none;">
+                        <h3>📝 Maqolalar</h3>
+                        <div class="articles-list" id="display-articles"></div>
+                    </div>
+
+                    <!-- Postlar -->
+                    <div class="display-card" id="posts-display-card" style="display: none;">
+                        <h3>📋 Postlar</h3>
+                        <div class="posts-list" id="display-posts"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('login')">&times;</span>
+            <h2>Tizimga kirish</h2>
+            <form id="login-form" onsubmit="return loginUser(event)">
+                <div class="form-group">
+                    <label for="login-username">Foydalanuvchi nomi:</label>
+                    <input type="text" id="login-username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Parol:</label>
+                    <input type="password" id="login-password" name="password" required>
+                </div>
+                <button type="submit" class="form-btn">Kirish</button>
+                <p class="form-switch">Hisobingiz yo'qmi? <span onclick="switchModal('register')">Ro'yxatdan o'ting</span></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('register')">&times;</span>
+            <h2>Ro'yxatdan o'tish</h2>
+            <form id="register-form" onsubmit="return registerUser(event)">
+                <div class="form-group">
+                    <label for="register-fullname">To'liq ism:</label>
+                    <input type="text" id="register-fullname" name="fullname" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-username">Foydalanuvchi nomi:</label>
+                    <input type="text" id="register-username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email:</label>
+                    <input type="email" id="register-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Parol:</label>
+                    <input type="password" id="register-password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-confirm-password">Parolni tasdiqlang:</label>
+                    <input type="password" id="register-confirm-password" name="confirm-password" required>
+                </div>
+                <button type="submit" class="form-btn">Ro'yxatdan o'tish</button>
+                <p class="form-switch">Hisobingiz bormi? <span onclick="switchModal('login')">Kirish</span></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create File Modal -->
+    <div id="create-file-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('create-file')">&times;</span>
+            <h2>📁 Fayl yaratish</h2>
+            <form id="create-file-form" onsubmit="return uploadFile(event)">
+                <div class="form-group">
+                    <label>Fayl turini tanlang:</label>
+                    <select id="file-type" required>
+                        <option value="">Tanlang...</option>
+                        <option value="showcase">🎭 Ko'rgazma</option>
+                        <option value="regulatory">📜 Me'yoriy hujjat</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="file-title">Fayl nomi:</label>
+                    <input type="text" id="file-title" required placeholder="Masalan: Matematika bo'yicha dars ishlanma">
+                </div>
+                <div class="form-group">
+                    <label for="file-description">Qisqacha tavsif:</label>
+                    <textarea id="file-description" rows="3" placeholder="Fayl haqida ma'lumot..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="file-upload-input">Fayl yuklash:</label>
+                    <input type="file" id="file-upload-input" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.png" required>
+                    <small>PDF, Word, PowerPoint, rasm fayllar qabul qilinadi</small>
+                </div>
+                <button type="submit" class="form-btn">📤 Yuklash</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Article Modal -->
+    <div id="article-modal" class="modal">
+        <div class="modal-content modal-large">
+            <span class="close" onclick="closeModal('article')">&times;</span>
+            <h2>📝 Maqola yozish</h2>
+            <form id="article-form" onsubmit="return saveArticle(event)">
+                <div class="form-group">
+                    <label for="article-title">Maqola sarlavhasi:</label>
+                    <input type="text" id="article-title" required placeholder="Maqola sarlavhasini kiriting">
+                </div>
+                <div class="form-group">
+                    <label for="article-category">Kategoriya:</label>
+                    <select id="article-category" required>
+                        <option value="">Tanlang...</option>
+                        <option value="methodology">Metodika</option>
+                        <option value="experience">Tajriba almashish</option>
+                        <option value="innovation">Innovatsiya</option>
+                        <option value="research">Tadqiqot</option>
+                        <option value="other">Boshqa</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="article-content">Maqola matni:</label>
+                    <textarea id="article-content" rows="12" required placeholder="Maqolangizni bu yerga yozing..."></textarea>
+                </div>
+                <button type="submit" class="form-btn">💾 Saqlash</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Post Modal -->
+    <div id="post-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('post')">&times;</span>
+            <h2>📋 Post yozish</h2>
+            <form id="post-form" onsubmit="return savePost(event)">
+                <div class="form-group">
+                    <label for="post-title">Post sarlavhasi:</label>
+                    <input type="text" id="post-title" required placeholder="Qisqa sarlavha kiriting">
+                </div>
+                <div class="form-group">
+                    <label for="post-content">Post matni:</label>
+                    <textarea id="post-content" rows="6" required placeholder="Fikrlaringizni yozing..."></textarea>
+                </div>
+                <button type="submit" class="form-btn">📤 Nashr qilish</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- File Detail Modal -->
+    <div id="file-detail-modal" class="modal">
+        <div class="modal-content modal-large">
+            <span class="close" onclick="closeModal('file-detail')">&times;</span>
+            <div id="file-detail-content">
+                <!-- File details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Ustoz-shogird Tizimi</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
