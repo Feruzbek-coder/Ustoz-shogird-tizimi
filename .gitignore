@@ -1,4 +1,12 @@
+__pycache__/
+*.py[cod]
+.env
 .vscode/
+.DS_Store
+*.log
+node_modules/
+dist/
+build/.vscode/
 *.pyc
 __pycache__/
 .DS_Store

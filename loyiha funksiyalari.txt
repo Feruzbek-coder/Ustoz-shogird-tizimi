@@ -1,0 +1,9 @@
+darslar uchun mashqlar va ko'rgazmalar yaratish tugmasi - har bir ustoz sahifasida bo'ladi, ko'rgazmalar bo'limida joylashtiriladi
+
+Fayllar bazasi sahifasini yaratish - Asosiy sahifada bo'ladi, Har bir o'qituvchi o'zining sahifasida kerakli hujjat yaratadi, ular asosiy sahifada ko'rinadi. bu fayl layklar va yuklab olishlarga qarab yuqori o'rinlarda turadi. har bir faylni ko'rish uchun shu fayl sahifasiga kirganda u haqida malumot chiqadi: kim tomonidan, qachon yaratilgan va hokazo. Me'yoriy hujjatlar bo'limida joylashadi
+
+Ta'limdagi biror bir soha, muammo bo'yicha maqola, tushunchalar berish kabilarni ustozlar o'z sahifasida e'lon qilishi mumkin. ijobiy fikrlar, layklarga qarab yuqori o'rinlarda turadi va keyinchalik ball berish tizimida ham qo'shiladi
+
+
+
+
