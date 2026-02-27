@@ -300,6 +300,51 @@ function setMainView(view) {
 
 function showHome() {
     setMainView('home');
+    renderTopTeachers();
+}
+
+function renderTopTeachers() {
+    const container = document.getElementById('top-teachers-section');
+    if (!container) return;
+
+    const teacherUsernames = Object.keys(portfolios).filter(u => portfolios[u] && portfolios[u].mentor);
+    const toifaLabels = { oliy: 'Oliy toifa', birinchi: 'Birinchi toifa', ikkinchi: 'Ikkinchi toifa', toifasiz: 'Toifasiz' };
+    const medals = ['🥇', '🥈', '🥉'];
+
+    const top = teacherUsernames
+        .map(username => {
+            const mentor = portfolios[username].mentor || {};
+            const points = (users[username] && typeof users[username].points === 'number') ? users[username].points : 0;
+            return { username, points, mentor };
+        })
+        .sort((a, b) => b.points - a.points)
+        .slice(0, 3);
+
+    if (top.length === 0) {
+        container.innerHTML = '';
+        return;
+    }
+
+    const cards = top.map((t, idx) => {
+        const m = t.mentor;
+        const name = m.fullname || t.username;
+        const experience = m.experience ? `<span>📅 Ish staji: ${m.experience}</span>` : '';
+        const toifa = m.toifa ? `<span>🎖️ Toifasi: ${toifaLabels[m.toifa] || m.toifa}</span>` : '';
+        const speciality = m.speciality ? `<span>📚 ${m.speciality}</span>` : '';
+        return `
+        <div class="top-teacher-card">
+            <div class="rank-badge">${medals[idx] || (idx + 1) + '-o\'rin'} ${idx + 1}-o'rin</div>
+            <div class="teacher-name">${name}</div>
+            <div class="teacher-info">
+                ${speciality}
+                ${experience}
+                ${toifa}
+                <span>⭐ ${t.points} ball</span>
+            </div>
+        </div>`;
+    }).join('');
+
+    container.innerHTML = `<h3>🏆 Eng yuqori reytingdagi ustozlar</h3><div class="top-teachers-grid">${cards}</div>`;
 }
 
 function showRatings() {
@@ -1241,6 +1286,7 @@ function loadPortfolioData() {
     document.getElementById('portfolio-speciality').value = roleData.speciality || '';
     document.getElementById('portfolio-workplace').value = roleData.workplace || '';
     document.getElementById('portfolio-experience').value = roleData.experience || '';
+    document.getElementById('portfolio-toifa').value = roleData.toifa || '';
     document.getElementById('portfolio-bio').value = roleData.bio || '';
     
     // Yutuqlarni yuklash
@@ -1259,6 +1305,7 @@ function savePersonalInfo() {
         speciality: document.getElementById('portfolio-speciality').value,
         workplace: document.getElementById('portfolio-workplace').value,
         experience: document.getElementById('portfolio-experience').value,
+        toifa: document.getElementById('portfolio-toifa').value,
         bio: document.getElementById('portfolio-bio').value,
         subjects: selectedSubjects,
         lastUpdated: new Date().toISOString()
@@ -1494,6 +1541,8 @@ function loadPortfolioDisplay() {
     document.getElementById('display-speciality').textContent = roleData.speciality || '-';
     document.getElementById('display-workplace').textContent = roleData.workplace || '-';
     document.getElementById('display-experience').textContent = roleData.experience || '-';
+    const toifaNames = { oliy: 'Oliy toifa', birinchi: 'Birinchi toifa', ikkinchi: 'Ikkinchi toifa', toifasiz: 'Toifasiz' };
+    document.getElementById('display-toifa').textContent = toifaNames[roleData.toifa] || '-';
     document.getElementById('display-bio').textContent = roleData.bio || 'Ma\'lumot kiritilmagan';
     
     // Tanlangan fanlar
@@ -1802,6 +1851,8 @@ function viewTeacherPortfolio(teacherUsername) {
     document.getElementById('display-speciality').textContent = mentorData.speciality || '-';
     document.getElementById('display-workplace').textContent = mentorData.workplace || '-';
     document.getElementById('display-experience').textContent = mentorData.experience || '-';
+    const toifaLabels = { oliy: 'Oliy toifa', birinchi: 'Birinchi toifa', ikkinchi: 'Ikkinchi toifa', toifasiz: 'Toifasiz' };
+    document.getElementById('display-toifa').textContent = toifaLabels[mentorData.toifa] || '-';
     document.getElementById('display-bio').textContent = mentorData.bio || 'Ma\'lumot kiritilmagan';
     
     // Tanlangan fanlar

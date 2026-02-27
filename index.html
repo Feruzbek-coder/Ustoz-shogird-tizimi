@@ -35,6 +35,7 @@
         <section class="welcome-section" id="home-section">
             <h2>Xush kelibsiz!</h2>
             <p>Ustozlar reytingini ko'ring yoki o'zingizning sahifangizni to'ldiring.</p>
+            <div class="top-teachers-section" id="top-teachers-section"></div>
         </section>
 
         <!-- Ratings -->
@@ -120,6 +121,18 @@
                                     <input type="text" id="portfolio-experience" placeholder="Masalan: 5 yil">
                                 </div>
                             </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Malaka toifasi:</label>
+                                    <select id="portfolio-toifa">
+                                        <option value="">Tanlanmagan</option>
+                                        <option value="oliy">Oliy toifa</option>
+                                        <option value="birinchi">Birinchi toifa</option>
+                                        <option value="ikkinchi">Ikkinchi toifa</option>
+                                        <option value="toifasiz">Toifasiz</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label>Qisqacha ma'lumot:</label>
                                 <textarea id="portfolio-bio" placeholder="O'zingiz haqingizda qisqacha ma'lumot..."></textarea>
@@ -195,6 +208,10 @@
                             <div class="info-item">
                                 <label>Ish tajribasi:</label>
                                 <span id="display-experience">-</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Malaka toifasi:</label>
+                                <span id="display-toifa">-</span>
                             </div>
                             <div class="info-item full-width">
                                 <label>Qisqacha ma'lumot:</label>

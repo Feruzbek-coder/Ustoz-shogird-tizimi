@@ -10,7 +10,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: #333;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, rgba(60, 80, 180, 0.22) 0%, rgba(90, 40, 130, 0.22) 100%), url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1920&q=80') center/cover no-repeat fixed;
     min-height: 100vh;
 }
 
@@ -22,8 +22,8 @@ body {
 
 /* Header */
 header {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+    background: rgba(30, 20, 80, 0.45);
+    backdrop-filter: blur(4px);
     padding: 2rem 0;
     text-align: center;
     color: white;
@@ -74,13 +74,14 @@ header {
 header h1 {
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 2px 12px rgba(0,0,0,0.7), 2px 2px 4px rgba(0,0,0,0.5);
 }
 
 .subtitle {
     font-size: 1.2rem;
-    opacity: 0.9;
+    opacity: 1;
     margin-bottom: 1.5rem;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.6);
 }
 
 /* Home Actions */
@@ -142,23 +143,96 @@ main {
 }
 
 .welcome-section, .subjects-section, .test-section {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(1px);
     border-radius: 15px;
     padding: 2rem;
     margin-bottom: 1.5rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
+/* Top Teachers Cards */
+.top-teachers-section {
+    margin-top: 2rem;
+}
+
+.top-teachers-section h3 {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+    font-weight: 700;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+
+.top-teachers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.2rem;
+}
+
+.top-teacher-card {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(10px);
+    border-radius: 14px;
+    padding: 1.4rem 1.6rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border-top: 4px solid #667eea;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.top-teacher-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+}
+
+.top-teacher-card .rank-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    margin-bottom: 0.6rem;
+}
+
+.top-teacher-card .teacher-name {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #1a202c;
+    margin-bottom: 0.6rem;
+    text-shadow: 0 1px 2px rgba(255,255,255,0.6);
+}
+
+.top-teacher-card .teacher-info {
+    font-size: 1.05rem;
+    color: #2d3748;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.top-teacher-card .teacher-info span {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
 .welcome-section h2, .subjects-section h2, .test-section h2 {
-    color: #4a5568;
+    color: #fff;
     margin-bottom: 1rem;
-    font-size: 1.8rem;
+    font-size: 2.2rem;
+    font-weight: 800;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.9);
 }
 
 .welcome-section p {
-    color: #718096;
-    font-size: 1.05rem;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 500;
     line-height: 1.6;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.8), 0 2px 4px rgba(0,0,0,0.7);
 }
 
 /* Subjects Grid */
