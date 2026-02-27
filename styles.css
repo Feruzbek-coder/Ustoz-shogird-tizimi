@@ -10,7 +10,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: #333;
-    background: linear-gradient(135deg, rgba(60, 80, 180, 0.22) 0%, rgba(90, 40, 130, 0.22) 100%), url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1920&q=80') center/cover no-repeat fixed;
+    background: linear-gradient(135deg, rgba(60, 80, 180, 0.22) 0%, rgba(90, 40, 130, 0.22) 100%), url('bg.jpg') center/cover no-repeat fixed;
     min-height: 100vh;
 }
 
